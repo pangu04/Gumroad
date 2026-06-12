@@ -1,0 +1,243 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ─── Enums ───
+
+enum Role {
+  CUSTOMER
+  SELLER
+  ADMIN
+}
+
+enum ProductStatus {
+  DRAFT
+  ACTIVE
+  ARCHIVED
+  REJECTED
+}
+
+enum OrderStatus {
+  PENDING
+  COMPLETED
+  REFUNDED
+  CANCELLED
+}
+
+// ─── Models ───
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  role         Role     @default(CUSTOMER)
+  avatar       String?
+  isActive     Boolean  @default(true)
+  isVerified   Boolean  @default(false)
+  refreshToken String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relations
+  creatorProfile  CreatorProfile?
+  products        Product[]
+  orders          Order[]
+  reviews         Review[]
+  wishlist        Wishlist[]
+  downloads       DownloadHistory[]
+  soldOrderItems  OrderItem[]       @relation("seller")
+
+  @@index([email])
+  @@index([role])
+  @@map("users")
+}
+
+model CreatorProfile {
+  id            String   @id @default(uuid())
+  userId        String   @unique
+  handle        String   @unique
+  bio           String?
+  coverImage    String?
+  socialLinks   Json?
+  totalSales    Decimal  @default(0) @db.Decimal(12, 2)
+  followerCount Int      @default(0)
+  createdAt     DateTime @default(now())
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([handle])
+  @@map("creator_profiles")
+}
+
+model Category {
+  id           String    @id @default(uuid())
+  name         String    @unique
+  slug         String    @unique
+  icon         String?
+  color        String?
+  productCount Int       @default(0)
+  createdAt    DateTime  @default(now())
+
+  // Relations
+  products Product[]
+
+  @@map("categories")
+}
+
+model Product {
+  id              String        @id @default(uuid())
+  creatorId       String
+  categoryId      String
+  title           String
+  slug            String        @unique
+  description     String
+  longDescription String?
+  price           Decimal       @db.Decimal(10, 2)
+  originalPrice   Decimal?      @db.Decimal(10, 2)
+  thumbnail       String?
+  fileUrl         String?
+  tags            String[]
+  status          ProductStatus @default(DRAFT)
+  rating          Decimal       @default(0) @db.Decimal(2, 1)
+  salesCount      Int           @default(0)
+  viewCount       Int           @default(0)
+  publishedAt     DateTime?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  // Relations
+  creator    User           @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  category   Category       @relation(fields: [categoryId], references: [id])
+  files      ProductFile[]
+  images     ProductImage[]
+  orderItems OrderItem[]
+  reviews    Review[]
+  wishlist   Wishlist[]
+
+  @@index([creatorId])
+  @@index([categoryId])
+  @@index([status, publishedAt])
+  @@index([rating(sort: Desc)])
+  @@index([salesCount(sort: Desc)])
+  @@map("products")
+}
+
+model ProductFile {
+  id        String   @id @default(uuid())
+  productId String
+  fileName  String
+  fileUrl   String
+  fileSize  BigInt
+  fileType  String
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+  @@map("product_files")
+}
+
+model ProductImage {
+  id        String   @id @default(uuid())
+  productId String
+  imageUrl  String
+  altText   String?
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+  @@map("product_images")
+}
+
+model Order {
+  id            String      @id @default(uuid())
+  orderNumber   String      @unique
+  customerId    String
+  totalAmount   Decimal     @db.Decimal(10, 2)
+  status        OrderStatus @default(PENDING)
+  paymentMethod String?
+  paymentId     String?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  customer User        @relation(fields: [customerId], references: [id])
+  items    OrderItem[]
+
+  @@index([customerId])
+  @@index([status])
+  @@map("orders")
+}
+
+model OrderItem {
+  id        String   @id @default(uuid())
+  orderId   String
+  productId String
+  sellerId  String
+  price     Decimal  @db.Decimal(10, 2)
+  createdAt DateTime @default(now())
+
+  order     Order             @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product   Product           @relation(fields: [productId], references: [id])
+  seller    User              @relation("seller", fields: [sellerId], references: [id])
+  downloads DownloadHistory[]
+
+  @@unique([orderId, productId])
+  @@index([sellerId])
+  @@map("order_items")
+}
+
+model Review {
+  id        String   @id @default(uuid())
+  productId String
+  userId    String
+  rating    Int
+  comment   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([productId, userId])
+  @@map("reviews")
+}
+
+model Wishlist {
+  id        String   @id @default(uuid())
+  userId    String
+  productId String
+  createdAt DateTime @default(now())
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, productId])
+  @@map("wishlists")
+}
+
+model DownloadHistory {
+  id           String   @id @default(uuid())
+  userId       String
+  orderItemId  String
+  productId    String
+  downloadedAt DateTime @default(now())
+  ipAddress    String?
+
+  user      User      @relation(fields: [userId], references: [id])
+  orderItem OrderItem @relation(fields: [orderItemId], references: [id])
+
+  @@index([userId])
+  @@index([productId])
+  @@map("download_history")
+}

@@ -1,2 +1,15 @@
 packages:
   - '.'
+  - 'gumroad-frontend'
+  - 'gumroad-backend'
+allowBuilds:
+  '@nestjs/core': true
+  '@prisma/client': set this to true or false
+  '@prisma/engines': true
+  '@tailwindcss/oxide': true
+  bcrypt: set this to true or false
+  esbuild: true
+  msw: true
+  prisma: true
+  sharp: true
+  unrs-resolver: true
