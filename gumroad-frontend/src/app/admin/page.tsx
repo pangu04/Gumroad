@@ -522,7 +522,7 @@ export default function AdminDashboard() {
                         fontWeight: 'bold',
                         boxShadow: '4px 4px 0 0 #000'
                       }}
-                      formatter={(value: number) => [`$${value}`, locale === 'vi' ? 'Doanh thu' : 'Revenue']}
+                      formatter={(value: any) => [`$${value}`, locale === 'vi' ? 'Doanh thu' : 'Revenue']}
                     />
                     <Bar 
                       dataKey="revenue" 
