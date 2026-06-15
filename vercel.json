@@ -1,0 +1,6 @@
+{
+  "buildCommand": "cd gumroad-frontend && pnpm install && pnpm run build",
+  "outputDirectory": "gumroad-frontend/.next",
+  "installCommand": "echo 'skip root install'",
+  "framework": "nextjs"
+}
