@@ -71,4 +71,14 @@ export class ProductsController {
   async myProducts(@Request() req: any) {
     return this.productsService.findByCreator(req.user.userId);
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Post(':id/reviews')
+  async addReview(
+    @Param('id') id: string,
+    @Request() req: any,
+    @Body() body: { rating: number; comment: string },
+  ) {
+    return this.productsService.addReview(id, req.user.userId, body.rating, body.comment);
+  }
 }

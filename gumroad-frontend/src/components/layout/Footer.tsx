@@ -44,8 +44,8 @@ export function Footer() {
             },
             {
               title: t.footer.companyTitle,
-              links: [t.nav.about, t.nav.blog, t.nav.jobs, t.footer.press],
-              paths: ['/about', '/blog', '/jobs', '#'],
+              links: [t.nav.about, t.footer.press],
+              paths: ['/about', '#'],
             },
             {
               title: t.footer.supportTitle,

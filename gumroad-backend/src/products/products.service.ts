@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateProductDto, UpdateProductDto } from './dto/product.dto';
 
@@ -130,5 +130,48 @@ export class ProductsService {
     return this.prisma.category.findMany({
       orderBy: { name: 'asc' },
     });
+  }
+
+  async addReview(productId: string, userId: string, rating: number, comment: string) {
+    // Verify user actually bought the item
+    const hasBought = await this.prisma.orderItem.findFirst({
+      where: {
+        productId,
+        order: {
+          customerId: userId,
+          status: 'COMPLETED'
+        }
+      }
+    });
+
+    if (!hasBought) {
+      throw new BadRequestException('You must buy this product before reviewing it');
+    }
+
+    const review = await this.prisma.review.upsert({
+      where: {
+        productId_userId: { productId, userId }
+      },
+      update: {
+        rating,
+        comment
+      },
+      create: {
+        productId,
+        userId,
+        rating,
+        comment
+      }
+    });
+
+    // Update product average rating
+    const allReviews = await this.prisma.review.findMany({ where: { productId } });
+    const avgRating = allReviews.reduce((acc, r) => acc + r.rating, 0) / allReviews.length;
+    await this.prisma.product.update({
+      where: { id: productId },
+      data: { rating: avgRating }
+    });
+
+    return review;
   }
 }

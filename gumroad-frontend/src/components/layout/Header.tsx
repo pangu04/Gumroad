@@ -13,11 +13,9 @@ export function Header() {
 
   const navItems = [
     { label: t.nav.discover, path: '/' },
-    { label: t.nav.blog, path: '/blog' },
     { label: t.nav.pricing, path: '/pricing' },
     { label: t.nav.features, path: '/features' },
     { label: t.nav.about, path: '/about' },
-    { label: t.nav.jobs, path: '/jobs' },
   ];
 
   const isActive = (path: string) => {

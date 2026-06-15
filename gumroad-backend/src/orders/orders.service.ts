@@ -58,12 +58,21 @@ export class OrdersService {
     return items.map(item => item.product);
   }
 
-  async getMyRevenueReport(sellerId: string) {
+  async getMyRevenueReport(sellerId: string, year?: number) {
+    const targetYear = year || new Date().getFullYear();
+
     const items = await this.prisma.orderItem.findMany({
-      where: { sellerId },
+      where: {
+        sellerId,
+        createdAt: {
+          gte: new Date(`${targetYear}-01-01T00:00:00.000Z`),
+          lte: new Date(`${targetYear}-12-31T23:59:59.999Z`),
+        }
+      },
       select: { price: true, createdAt: true }
     });
 
+    // Also get all-time items to calculate total-all-time if needed, but we can just return total for the year
     let totalRevenue = 0;
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     const monthlyData: Record<string, number> = {};
@@ -85,6 +94,7 @@ export class OrdersService {
     }));
 
     return {
+      year: targetYear,
       totalRevenue: Math.round(netRevenue),
       totalSales: items.length,
       chartData,

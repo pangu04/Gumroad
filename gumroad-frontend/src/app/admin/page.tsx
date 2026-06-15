@@ -43,8 +43,14 @@ export default function AdminDashboard() {
   const [uploading, setUploading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [toast, setToast] = useState('');
-  const [activeTab, setActiveTab] = useState<'products' | 'reports'>('products');
+  const [activeTab, setActiveTab] = useState<'products' | 'reports' | 'purchases' | 'profile'>('products');
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const avatarInputRef = useRef<HTMLInputElement>(null);
+  const [uploadingAvatar, setUploadingAvatar] = useState(false);
+  
+  const [purchases, setPurchases] = useState<Product[]>([]);
+  const [profileForm, setProfileForm] = useState({ name: user?.name || '', avatar: user?.avatar || '' });
+  const [reportYear, setReportYear] = useState<number>(new Date().getFullYear());
 
   const [form, setForm] = useState({
     title: '',
@@ -72,19 +78,32 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     if (!loading && !user) router.push('/auth/login');
+    if (user) {
+      setProfileForm({ name: user.name || '', avatar: user.avatar || '' });
+    }
   }, [user, loading, router]);
 
   useEffect(() => {
     if (token && user) {
       fetchCategories();
       fetchMyProducts();
-      fetchRevenue();
+      fetchRevenue(reportYear);
+      fetchPurchases();
     }
-  }, [user, token, router]);
+  }, [user, token, router, reportYear]);
 
-  const fetchRevenue = async () => {
+  const fetchPurchases = async () => {
     try {
-      const res = await fetch(`${backendUrl}/api/orders/my-revenue`, {
+      const res = await fetch(`${backendUrl}/api/orders/my-purchases`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (res.ok) setPurchases(await res.json());
+    } catch (e) { console.error(e); }
+  };
+
+  const fetchRevenue = async (year: number) => {
+    try {
+      const res = await fetch(`${backendUrl}/api/orders/my-revenue?year=${year}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       if (res.ok) {
@@ -130,11 +149,32 @@ export default function AdminDashboard() {
       if (!res.ok) throw new Error('Upload failed');
       const { url } = await res.json();
       setForm((f) => ({ ...f, thumbnail: url }));
-      showToast('✅ Image uploaded to Cloudinary!');
+      showToast('Image uploaded to Cloudinary!');
     } catch (e) {
-      showToast('❌ Upload failed');
+      showToast('Upload failed');
     } finally {
       setUploading(false);
+    }
+  };
+
+  const handleAvatarUpload = async (file: File) => {
+    setUploadingAvatar(true);
+    try {
+      const fd = new FormData();
+      fd.append('file', file);
+      const res = await fetch(`${backendUrl}/api/products/upload-thumbnail`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${token}` },
+        body: fd,
+      });
+      if (!res.ok) throw new Error('Upload failed');
+      const { url } = await res.json();
+      setProfileForm((f) => ({ ...f, avatar: url }));
+      showToast('Avatar uploaded!');
+    } catch (e) {
+      showToast('Upload failed');
+    } finally {
+      setUploadingAvatar(false);
     }
   };
 
@@ -143,7 +183,7 @@ export default function AdminDashboard() {
     setSaving(true);
     try {
       if (!form.fileUrl) {
-        showToast('❌ Vui lòng cung cấp link tải File (File URL)');
+        showToast('Vui lòng cung cấp link tải File (File URL)');
         setSaving(false);
         return;
       }
@@ -181,13 +221,13 @@ export default function AdminDashboard() {
         throw new Error(err.message || 'Save failed');
       }
 
-      showToast(editProduct ? '✅ Product updated!' : '✅ Product created!');
+      showToast(editProduct ? 'Product updated!' : 'Product created!');
       setShowForm(false);
       setEditProduct(null);
       resetForm();
       fetchMyProducts();
     } catch (err: any) {
-      showToast(`❌ ${err.message}`);
+      showToast(`${err.message}`);
     } finally {
       setSaving(false);
     }
@@ -201,10 +241,33 @@ export default function AdminDashboard() {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (res.ok) {
-        showToast('🗑️ Product deleted');
+        showToast('Product deleted');
         fetchMyProducts();
       }
-    } catch (e) { showToast('❌ Delete failed'); }
+    } catch (e) { showToast('Delete failed'); }
+  };
+
+  const handleUpdateProfile = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const res = await fetch(`${backendUrl}/api/auth/profile`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(profileForm),
+      });
+      if (res.ok) {
+        showToast(locale === 'vi' ? 'Cập nhật thông tin thành công!' : 'Profile updated!');
+        // Ideally should update context, but a reload or re-fetch would also work.
+        setTimeout(() => window.location.reload(), 1000);
+      } else {
+        showToast('Cập nhật thất bại');
+      }
+    } catch (e) {
+      showToast('Cập nhật thất bại');
+    }
   };
 
   const openEdit = (p: Product) => {
@@ -285,12 +348,38 @@ export default function AdminDashboard() {
                 {locale === 'vi' ? 'Báo cáo' : 'Reports'}
               </span>
             </button>
+            <button
+              onClick={() => setActiveTab('purchases')}
+              className={`w-full px-3 py-3 rounded-xl flex items-center gap-3 transition-colors ${
+                activeTab === 'purchases' ? 'bg-[#FF90E8] text-black border-2 border-black font-bold' : 'text-gray-600 hover:bg-gray-50 border-2 border-transparent hover:border-gray-200'
+              }`}
+            >
+              <Package size={18} className={activeTab === 'purchases' ? 'text-black' : 'text-gray-500'} />
+              <span className="text-sm" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+                {locale === 'vi' ? 'Sản phẩm đã mua' : 'My Purchases'}
+              </span>
+            </button>
+            <button
+              onClick={() => setActiveTab('profile')}
+              className={`w-full px-3 py-3 rounded-xl flex items-center gap-3 transition-colors ${
+                activeTab === 'profile' ? 'bg-[#FF90E8] text-black border-2 border-black font-bold' : 'text-gray-600 hover:bg-gray-50 border-2 border-transparent hover:border-gray-200'
+              }`}
+            >
+              <Edit size={18} className={activeTab === 'profile' ? 'text-black' : 'text-gray-500'} />
+              <span className="text-sm" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+                {locale === 'vi' ? 'Thông tin cá nhân' : 'Profile Info'}
+              </span>
+            </button>
           </nav>
 
           <div className="p-4 border-t-2 border-black">
             <div className="flex items-center gap-3 mb-3">
-              <div className="w-9 h-9 rounded-full bg-[#FF90E8] border-2 border-black flex items-center justify-center">
-                <span className="font-bold text-black text-sm">{user.name[0]}</span>
+              <div className="w-9 h-9 rounded-full bg-[#FF90E8] border-2 border-black overflow-hidden flex items-center justify-center flex-shrink-0">
+                {user.avatar ? (
+                  <img src={user.avatar} alt={user.name} className="w-full h-full object-cover" />
+                ) : (
+                  <span className="font-bold text-black text-sm">{user.name[0]}</span>
+                )}
               </div>
               <div>
                 <p className="font-bold text-black text-sm" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>{user.name}</p>
@@ -314,7 +403,10 @@ export default function AdminDashboard() {
           <div className="flex items-center justify-between mb-8">
             <div>
               <h1 className="font-bold text-black text-3xl" style={{ fontFamily: 'Space Grotesk, sans-serif', letterSpacing: '-0.02em' }}>
-                {activeTab === 'products' ? t.admin.myProducts : (locale === 'vi' ? 'Báo cáo' : 'Reports')}
+                {activeTab === 'products' && t.admin.myProducts}
+                {activeTab === 'reports' && (locale === 'vi' ? 'Báo cáo' : 'Reports')}
+                {activeTab === 'purchases' && (locale === 'vi' ? 'Sản phẩm đã mua' : 'My Purchases')}
+                {activeTab === 'profile' && (locale === 'vi' ? 'Thông tin cá nhân' : 'Profile Info')}
               </h1>
               {activeTab === 'products' && (
                 <p className="text-gray-500 mt-1" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
@@ -338,9 +430,22 @@ export default function AdminDashboard() {
             <>
           {/* Revenue Report */}
           <div className="mb-8">
-            <h2 className="font-bold text-black text-xl mb-4" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
-              {locale === 'vi' ? 'Báo cáo doanh thu' : 'Revenue Report'}
-            </h2>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="font-bold text-black text-xl" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+                {locale === 'vi' ? 'Báo cáo doanh thu' : 'Revenue Report'}
+              </h2>
+              <select
+                value={reportYear}
+                onChange={(e) => setReportYear(Number(e.target.value))}
+                className="border-2 border-black rounded-lg px-3 py-2 font-bold text-black focus:outline-none focus:border-[#FF90E8]"
+                style={{ fontFamily: 'Space Grotesk, sans-serif' }}
+              >
+                {[...Array(5)].map((_, i) => {
+                  const y = new Date().getFullYear() - i;
+                  return <option key={y} value={y}>{y}</option>;
+                })}
+              </select>
+            </div>
             <div className="grid grid-cols-3 gap-5 mb-5">
               <div className="bg-white border-2 border-black rounded-2xl p-5 shadow-[4px_4px_0_0_#000]">
                 <div className="flex items-center gap-3 mb-2">
@@ -498,6 +603,109 @@ export default function AdminDashboard() {
                 </div>
               )}
             </>
+          )}
+
+          {activeTab === 'purchases' && (
+            <div className="grid grid-cols-3 gap-5">
+              {purchases.length === 0 ? (
+                <div className="col-span-3 border-2 border-black border-dashed rounded-3xl p-16 text-center">
+                  <Package size={48} className="text-gray-300 mx-auto mb-4" />
+                  <p className="font-bold text-gray-400 text-xl mb-2" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+                    {locale === 'vi' ? 'Bạn chưa mua sản phẩm nào' : 'No purchases yet'}
+                  </p>
+                  <Link href="/" className="bg-[#FF90E8] text-black font-bold px-8 py-3 rounded-full border-2 border-black hover:bg-black hover:text-white transition-colors inline-block mt-4" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+                    {locale === 'vi' ? 'Khám phá ngay' : 'Discover now'}
+                  </Link>
+                </div>
+              ) : (
+                purchases.map((p) => (
+                  <div key={p.id} className="bg-white border-2 border-black rounded-2xl overflow-hidden hover:shadow-[4px_4px_0_0_#000] transition-shadow">
+                    <div className="relative h-40 bg-gray-100">
+                      {p.thumbnail ? (
+                        <img src={p.thumbnail} alt={p.title} className="w-full h-full object-cover" />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center">
+                          <Package size={36} className="text-gray-300" />
+                        </div>
+                      )}
+                    </div>
+                    <div className="p-4">
+                      <h3 className="font-bold text-black text-base mb-3 line-clamp-1" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>{p.title}</h3>
+                      {p.fileUrl && (
+                        <a href={p.fileUrl} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 w-full bg-black text-white font-bold py-2 rounded-xl border-2 border-black hover:bg-[#FF90E8] hover:text-black transition-colors" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+                          <Upload size={14} className="rotate-180" />
+                          {locale === 'vi' ? 'Tải xuống' : 'Download'}
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          )}
+
+          {activeTab === 'profile' && (
+            <div className="max-w-2xl bg-white border-2 border-black rounded-3xl p-8 shadow-[8px_8px_0_0_#000]">
+              <h2 className="font-bold text-black text-2xl mb-6" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+                {locale === 'vi' ? 'Cập nhật thông tin' : 'Update Profile'}
+              </h2>
+              <form onSubmit={handleUpdateProfile} className="space-y-6">
+                <div>
+                  <label className="block text-sm font-bold text-black mb-2" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+                    {locale === 'vi' ? 'Tên hiển thị' : 'Display Name'}
+                  </label>
+                  <input
+                    required
+                    value={profileForm.name}
+                    onChange={(e) => setProfileForm(f => ({ ...f, name: e.target.value }))}
+                    className="w-full border-2 border-black rounded-xl px-4 py-3 focus:outline-none focus:border-[#FF90E8]"
+                    style={{ fontFamily: 'Space Grotesk, sans-serif' }}
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-bold text-black mb-2" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+                    {locale === 'vi' ? 'Ảnh đại diện' : 'Avatar'}
+                  </label>
+                  <div
+                    onClick={() => avatarInputRef.current?.click()}
+                    className="relative w-32 h-32 border-2 border-dashed border-black rounded-full overflow-hidden cursor-pointer hover:bg-gray-50 transition-colors flex items-center justify-center bg-gray-100"
+                  >
+                    {profileForm.avatar ? (
+                      <>
+                        <img src={profileForm.avatar} alt="avatar" className="w-full h-full object-cover" />
+                        <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
+                          <span className="text-white font-bold text-xs" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>Click to change</span>
+                        </div>
+                      </>
+                    ) : (
+                      <div className="w-full h-full flex flex-col items-center justify-center gap-2">
+                        {uploadingAvatar ? (
+                          <div className="w-6 h-6 border-4 border-[#FF90E8] border-t-transparent rounded-full animate-spin" />
+                        ) : (
+                          <>
+                            <Upload size={24} className="text-gray-400" />
+                          </>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                  <input
+                    ref={avatarInputRef}
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={(e) => { if (e.target.files?.[0]) handleAvatarUpload(e.target.files[0]); }}
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="bg-[#FF90E8] text-black font-bold px-8 py-3 rounded-full border-2 border-black hover:bg-black hover:text-white transition-colors"
+                  style={{ fontFamily: 'Space Grotesk, sans-serif' }}
+                >
+                  {locale === 'vi' ? 'Lưu thay đổi' : 'Save Changes'}
+                </button>
+              </form>
+            </div>
           )}
         </main>
       </div>

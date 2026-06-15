@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, UseGuards, Request } from '@nestjs/common';
+import { Controller, Get, Post, Body, UseGuards, Request, Query } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
@@ -20,7 +20,7 @@ export class OrdersController {
 
   @UseGuards(JwtAuthGuard)
   @Get('my-revenue')
-  async myRevenue(@Request() req: any) {
-    return this.ordersService.getMyRevenueReport(req.user.userId);
+  async myRevenue(@Request() req: any, @Query('year') year?: string) {
+    return this.ordersService.getMyRevenueReport(req.user.userId, year ? parseInt(year) : undefined);
   }
 }

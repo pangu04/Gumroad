@@ -22,4 +22,10 @@ export class AuthController {
   async getProfile(@Request() req: any) {
     return this.authService.getProfile(req.user.userId);
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('profile') // Use POST to support file uploads later or PUT, but Post is easier with NextJS FormData
+  async updateProfile(@Request() req: any, @Body() body: { name?: string; avatar?: string }) {
+    return this.authService.updateProfile(req.user.userId, body);
+  }
 }

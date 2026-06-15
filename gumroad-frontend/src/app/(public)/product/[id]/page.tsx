@@ -24,6 +24,8 @@ interface Product {
   status: string;
   category: { id: string; name: string; icon: string; color: string };
   creator: { id: string; name: string; avatar: string; creatorProfile?: { handle: string } };
+  reviews?: { id: string; rating: number; comment: string; createdAt: string; user: { name: string; avatar: string; } }[];
+  rating: number;
 }
 
 export default function ProductDetail() {
@@ -34,6 +36,9 @@ export default function ProductDetail() {
   const [related, setRelated] = useState<any[]>([]);
   const [purchased, setPurchased] = useState(false);
   const [purchasedFileUrl, setPurchasedFileUrl] = useState<string | null>(null);
+  const [reviewRating, setReviewRating] = useState(5);
+  const [reviewComment, setReviewComment] = useState('');
+  const [submittingReview, setSubmittingReview] = useState(false);
   const { t, locale } = useI18n();
   const { user, token } = useAuth();
 
@@ -75,6 +80,8 @@ export default function ProductDetail() {
             } catch (e) {
               // Ignore purchase check errors
             }
+
+            // We removed auto-fill so the review box is always empty on load
           }
         }
       } catch (err) {
@@ -115,6 +122,59 @@ export default function ProductDetail() {
       alert('Checkout error');
     } finally {
       setIsCheckingOut(false);
+    }
+  };
+
+  const handleReviewSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!token || !product) return;
+    setSubmittingReview(true);
+    try {
+      const res = await fetch(`${backendUrl}/api/products/${product.id}/reviews`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ rating: reviewRating, comment: reviewComment })
+      });
+      if (res.ok) {
+        const newReview = await res.json();
+        alert(locale === 'vi' ? 'Đánh giá thành công!' : 'Review submitted!');
+        
+        // Reset the form
+        setReviewRating(5);
+        setReviewComment('');
+        
+        // Optimistically update product state so review appears below
+        setProduct((prev: any) => {
+          if (!prev) return prev;
+          let newReviews = [...(prev.reviews || [])];
+          const existingIndex = newReviews.findIndex((r: any) => r.user?.name === user?.name);
+          
+          if (existingIndex >= 0) {
+            newReviews[existingIndex] = { ...newReviews[existingIndex], rating: newReview.rating, comment: newReview.comment };
+          } else {
+            newReviews.unshift({
+              id: newReview.id || Date.now().toString(),
+              rating: newReview.rating,
+              comment: newReview.comment,
+              createdAt: newReview.createdAt || new Date().toISOString(),
+              user: { name: user?.name || 'You', avatar: user?.avatar || '' }
+            });
+          }
+          
+          const newRating = newReviews.reduce((acc, r) => acc + r.rating, 0) / newReviews.length;
+          return { ...prev, reviews: newReviews, rating: newRating };
+        });
+      } else {
+        const err = await res.json();
+        alert(err.message || 'Error submitting review');
+      }
+    } catch (err) {
+      alert('Error submitting review');
+    } finally {
+      setSubmittingReview(false);
     }
   };
 
@@ -200,10 +260,10 @@ export default function ProductDetail() {
             <div className="flex items-center gap-4 mb-8 pb-8 border-b-2 border-black">
               <div className="flex items-center gap-1">
                 {[1, 2, 3, 4, 5].map((star) => (
-                  <Star key={star} size={16} className="text-yellow-400 fill-yellow-400" />
+                  <Star key={star} size={16} className={star <= (product.rating || 5) ? "text-yellow-400 fill-yellow-400" : "text-gray-300"} />
                 ))}
                 <span className="font-bold text-black text-sm ml-1" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
-                  5.0
+                  {Number(product.rating || 5).toFixed(1)}
                 </span>
               </div>
               <span className="text-gray-300">·</span>
@@ -230,6 +290,76 @@ export default function ProductDetail() {
                 )}
               </div>
             )}
+
+            {/* Reviews Section */}
+            <div className="mb-8 pt-8 border-t-2 border-black">
+              <h2 className="font-bold text-black text-xl mb-6" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+                {locale === 'vi' ? 'Đánh giá sản phẩm' : 'Product Reviews'}
+              </h2>
+              
+              {purchased && (
+                <form onSubmit={handleReviewSubmit} className="mb-8 bg-gray-50 p-6 rounded-2xl border-2 border-black">
+                  <h3 className="font-bold text-black mb-4" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+                    {locale === 'vi' ? 'Viết đánh giá của bạn' : 'Write a review'}
+                  </h3>
+                  <div className="flex items-center gap-2 mb-4">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <button
+                        key={star}
+                        type="button"
+                        onClick={() => setReviewRating(star)}
+                        className="focus:outline-none"
+                      >
+                        <Star size={24} className={star <= reviewRating ? "text-yellow-400 fill-yellow-400" : "text-gray-300"} />
+                      </button>
+                    ))}
+                  </div>
+                  <textarea
+                    value={reviewComment}
+                    onChange={(e) => setReviewComment(e.target.value)}
+                    placeholder={locale === 'vi' ? 'Chia sẻ cảm nhận của bạn...' : 'Share your thoughts...'}
+                    className="w-full border-2 border-black rounded-xl px-4 py-3 mb-4 focus:outline-none focus:border-[#FF90E8]"
+                    rows={3}
+                    style={{ fontFamily: 'Space Grotesk, sans-serif' }}
+                  />
+                  <button
+                    type="submit"
+                    disabled={submittingReview}
+                    className="bg-[#FF90E8] text-black font-bold px-6 py-2 rounded-full border-2 border-black hover:bg-black hover:text-white transition-colors disabled:opacity-50"
+                    style={{ fontFamily: 'Space Grotesk, sans-serif' }}
+                  >
+                    {submittingReview ? '...' : (locale === 'vi' ? 'Gửi đánh giá' : 'Submit Review')}
+                  </button>
+                </form>
+              )}
+
+              {product.reviews && product.reviews.length > 0 ? (
+                <div className="space-y-4">
+                  {product.reviews.map((r: any) => (
+                    <div key={r.id} className="border-2 border-black rounded-xl p-4 bg-white">
+                      <div className="flex items-center gap-3 mb-2">
+                        <img src={r.user.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${r.user.name}`} alt={r.user.name} className="w-10 h-10 rounded-full border-2 border-black object-cover" />
+                        <div>
+                          <p className="font-bold text-sm" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>{r.user.name}</p>
+                          <div className="flex items-center gap-1">
+                            {[...Array(5)].map((_, i) => (
+                              <Star key={i} size={12} className={i < r.rating ? "text-yellow-400 fill-yellow-400" : "text-gray-300"} />
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                      {r.comment && (
+                        <p className="text-gray-600 text-sm mt-2" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>{r.comment}</p>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-gray-500 italic" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+                  {locale === 'vi' ? 'Chưa có đánh giá nào.' : 'No reviews yet.'}
+                </p>
+              )}
+            </div>
           </div>
 
           {/* Sidebar */}
@@ -251,47 +381,46 @@ export default function ProductDetail() {
                       </span>
                     )}
                   </div>
-                  <p className="text-sm font-semibold text-green-600" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
-                    {t.product.lifetimeAccess}
-                  </p>
+                  {!purchased && (
+                    <p className="text-sm font-semibold text-green-600" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+                      {t.product.lifetimeAccess}
+                    </p>
+                  )}
                 </div>
 
                 {purchased ? (
                   <>
-                    <div className="bg-green-50 border-2 border-green-400 rounded-xl p-3 mb-3 text-center">
-                      <p className="text-green-700 font-bold text-sm" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
-                        ✅ {locale === 'vi' ? 'Bạn đã mua sản phẩm này' : 'You own this product'}
-                      </p>
-                    </div>
                     {purchasedFileUrl && (
                       <a
                         href={purchasedFileUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-full flex items-center justify-center gap-2 bg-black text-white font-bold py-4 rounded-xl border-2 border-black hover:bg-[#FF90E8] hover:text-black transition-colors mb-4"
+                        className="w-full flex items-center justify-center gap-2 bg-[#FF90E8] text-black font-bold py-4 rounded-xl border-2 border-black hover:bg-black hover:text-white transition-colors mb-4"
                         style={{ fontFamily: 'Space Grotesk, sans-serif' }}
                       >
                         <Download size={18} />
-                        {locale === 'vi' ? 'Tải xuống' : 'Download'}
+                        {locale === 'vi' ? 'Lấy file ngay' : 'Get file now'}
                       </a>
                     )}
                   </>
                 ) : (
-                  <button
-                    onClick={handleCheckout}
-                    disabled={isCheckingOut}
-                    className="w-full bg-[#FF90E8] text-black font-bold py-4 rounded-xl border-2 border-black hover:bg-black hover:text-white transition-colors mb-4 disabled:opacity-50"
-                    style={{ fontFamily: 'Space Grotesk, sans-serif' }}
-                  >
-                    {isCheckingOut
-                      ? (locale === 'vi' ? 'Đang xử lý...' : 'Processing...')
-                      : t.product.buyNow}
-                  </button>
+                  <>
+                    <button
+                      onClick={handleCheckout}
+                      disabled={isCheckingOut}
+                      className="w-full bg-[#FF90E8] text-black font-bold py-4 rounded-xl border-2 border-black hover:bg-black hover:text-white transition-colors mb-4 disabled:opacity-50"
+                      style={{ fontFamily: 'Space Grotesk, sans-serif' }}
+                    >
+                      {isCheckingOut
+                        ? (locale === 'vi' ? 'Đang xử lý...' : 'Processing...')
+                        : t.product.buyNow}
+                    </button>
+                    <p className="text-xs text-center text-gray-500 font-semibold" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+                      {t.product.secureCheckout}
+                    </p>
+                  </>
                 )}
 
-                <p className="text-xs text-center text-gray-500 font-semibold" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
-                  {t.product.secureCheckout}
-                </p>
               </div>
 
               {/* Creator Card */}

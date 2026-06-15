@@ -114,4 +114,24 @@ export class AuthService {
       creatorProfile: user.creatorProfile,
     };
   }
+
+  async updateProfile(userId: string, data: { name?: string; avatar?: string }) {
+    const user = await this.prisma.user.update({
+      where: { id: userId },
+      data: {
+        ...(data.name && { name: data.name }),
+        ...(data.avatar && { avatar: data.avatar }),
+      },
+      include: { creatorProfile: true }
+    });
+    
+    return {
+      id: user.id,
+      email: user.email,
+      name: user.name,
+      role: user.role,
+      avatar: user.avatar,
+      creatorProfile: user.creatorProfile,
+    };
+  }
 }
