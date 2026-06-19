@@ -1,6 +1,7 @@
 'use client';
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { getBackendUrl } from '@/lib/api';
 
 interface User {
   id: string;
@@ -21,9 +22,7 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
-const API_URL = typeof window !== 'undefined'
-  ? `http://${window.location.hostname}:3001`
-  : 'http://localhost:3001';
+
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
@@ -41,8 +40,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const login = async (email: string, password: string) => {
-    const backendUrl = `http://${window.location.hostname}:3001`;
-    const res = await fetch(`${backendUrl}/api/auth/login`, {
+    const res = await fetch(`${getBackendUrl()}/api/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
@@ -61,8 +59,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const register = async (name: string, email: string, password: string) => {
-    const backendUrl = `http://${window.location.hostname}:3001`;
-    const res = await fetch(`${backendUrl}/api/auth/register`, {
+    const res = await fetch(`${getBackendUrl()}/api/auth/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name, email, password }),

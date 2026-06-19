@@ -1,6 +1,0 @@
-{
-  "installCommand": "cd gumroad-frontend && npm install",
-  "buildCommand": "cd gumroad-frontend && npm run build",
-  "outputDirectory": "gumroad-frontend/.next",
-  "framework": "nextjs"
-}

@@ -7,6 +7,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useI18n } from '@/i18n';
 import { Plus, Package, LogOut, Edit, Trash2, Upload, X, Eye, TrendingUp, DollarSign } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { getBackendUrl } from '@/lib/api';
 
 interface Product {
   id: string;
@@ -72,9 +73,7 @@ export default function AdminDashboard() {
     chartData: []
   });
 
-  const backendUrl = typeof window !== 'undefined'
-    ? `http://${window.location.hostname}:3001`
-    : 'http://localhost:3001';
+  const backendUrl = getBackendUrl();
 
   useEffect(() => {
     if (!loading && !user) router.push('/auth/login');

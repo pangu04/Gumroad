@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import { ProductCard } from '@/components/product/ProductCard';
 import { useI18n } from '@/i18n';
+import { getBackendUrl } from '@/lib/api';
 
 export default function CreatorProfile() {
   const { id } = useParams();
@@ -14,9 +15,7 @@ export default function CreatorProfile() {
   const [loading, setLoading] = useState(true);
   const { t } = useI18n();
 
-  const backendUrl = typeof window !== 'undefined'
-    ? `http://${window.location.hostname}:3001`
-    : 'http://localhost:3001';
+  const backendUrl = getBackendUrl();
 
   useEffect(() => {
     const fetchCreatorData = async () => {

@@ -8,6 +8,7 @@ import { CreatorCard } from '@/components/creator/CreatorCard';
 import { creators, categories } from '@/data';
 import { useI18n } from '@/i18n';
 import { useAuth } from '@/contexts/AuthContext';
+import { getBackendUrl } from '@/lib/api';
 
 export default function Discover() {
   const [activeCategory, setActiveCategory] = useState('All');
@@ -18,7 +19,7 @@ export default function Discover() {
 
   useEffect(() => {
     console.log('Fetching products from API...');
-    const backendUrl = `http://${window.location.hostname}:3001`;
+    const backendUrl = getBackendUrl();
     fetch(`${backendUrl}/api/products`)
       .then(res => {
         if (!res.ok) throw new Error('API response not ok');

@@ -7,6 +7,7 @@ import { ArrowLeft, Star, Download } from 'lucide-react';
 import { ProductCard } from '@/components/product/ProductCard';
 import { useI18n } from '@/i18n';
 import { useAuth } from '@/contexts/AuthContext';
+import { getBackendUrl } from '@/lib/api';
 
 interface Product {
   id: string;
@@ -42,9 +43,7 @@ export default function ProductDetail() {
   const { t, locale } = useI18n();
   const { user, token } = useAuth();
 
-  const backendUrl = typeof window !== 'undefined'
-    ? `http://${window.location.hostname}:3001`
-    : 'http://localhost:3001';
+  const backendUrl = getBackendUrl();
 
   useEffect(() => {
     const fetchProduct = async () => {

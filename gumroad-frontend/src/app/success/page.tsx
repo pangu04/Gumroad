@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { Download } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useI18n } from '@/i18n';
+import { getBackendUrl } from '@/lib/api';
 
 function SuccessPageContent() {
   const searchParams = useSearchParams();
@@ -14,9 +15,7 @@ function SuccessPageContent() {
   const { locale } = useI18n();
   const [productInfo, setProductInfo] = useState<any>(null);
 
-  const backendUrl = typeof window !== 'undefined'
-    ? `http://${window.location.hostname}:3001`
-    : 'http://localhost:3001';
+  const backendUrl = getBackendUrl();
 
   useEffect(() => {
     if (token) {
