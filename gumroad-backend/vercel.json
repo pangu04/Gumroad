@@ -3,7 +3,13 @@
   "builds": [
     {
       "src": "api/index.ts",
-      "use": "@vercel/node"
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": [
+          "src/generated/client/*query_engine-*.node",
+          "src/generated/client/schema.prisma"
+        ]
+      }
     }
   ],
   "routes": [
