@@ -11,20 +11,7 @@ allowBuilds:
   esbuild: true
   msw: true
   prisma: true
-  sharp: true
-  unrs-resolver: true
-
-onlyBuiltDependencies:
-  - '@nestjs/core'
-  - '@prisma/client'
-  - '@prisma/engines'
-  - '@tailwindcss/oxide'
-  - bcrypt
-  - esbuild
-  - msw
-  - prisma
-  - sharp
-  - unrs-resolver
+onlyBuiltDependenciesFile: ./allowed-deps.json
 
 overrides:
   vite: "6.3.5"
