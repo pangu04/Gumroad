@@ -15,7 +15,7 @@ const createServer = async (expressInstance: express.Express) => {
   return app;
 };
 
-let cachedServer: express.Express;
+let cachedServer: any;
 
 export default async (req: any, res: any) => {
   if (!cachedServer) {
