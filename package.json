@@ -2,7 +2,7 @@
   "name": "@figma/my-make-file",
   "private": true,
   "version": "0.0.1",
-  "packageManager": "pnpm@9.15.0",
+  "packageManager": "pnpm@10.18.0",
   "type": "module",
   "scripts": {
     "build": "vite build",
@@ -82,14 +82,5 @@
     "react-dom": {
       "optional": true
     }
-  },
-  "pnpm": {
-    "overrides": {
-      "vite": "6.3.5"
-    },
-    "onlyBuiltDependencies": [
-      "@prisma/client",
-      "bcrypt"
-    ]
   }
 }
