@@ -55,7 +55,7 @@ export default function Jobs() {
             className="text-[#FF90E8] font-bold text-sm uppercase tracking-widest mb-4"
             style={{ fontFamily: 'Space Grotesk, sans-serif' }}
           >
-            Careers at Gumroad
+            Careers at DigitalNook
           </p>
           <h1
             className="font-bold text-black mb-6"
@@ -221,7 +221,7 @@ export default function Jobs() {
               className="font-bold text-black text-3xl mb-3"
               style={{ fontFamily: 'Space Grotesk, sans-serif', letterSpacing: '-0.02em' }}
             >
-              Why Gumroad?
+              Why DigitalNook?
             </h2>
             <p
               className="text-gray-500"
@@ -271,7 +271,7 @@ export default function Jobs() {
             We're always looking for exceptional people. Send us your resume and tell us what you'd build.
           </p>
           <a
-            href="mailto:jobs@gumroad.com"
+            href="mailto:jobs@DigitalNook.com"
             className="inline-block bg-[#FF90E8] text-black font-bold px-8 py-4 rounded-full text-lg hover:bg-white transition-colors"
             style={{ fontFamily: 'Space Grotesk, sans-serif' }}
           >

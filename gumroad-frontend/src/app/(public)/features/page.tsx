@@ -20,7 +20,7 @@ const mainFeatures = [
   {
     icon: CreditCard,
     title: 'Sell anything',
-    description: 'Digital downloads, courses, memberships, physical products, software licenses — Gumroad handles all of it. One platform, endless product types.',
+    description: 'Digital downloads, courses, memberships, physical products, software licenses — DigitalNook handles all of it. One platform, endless product types.',
     color: '#FF90E8',
   },
   {
@@ -32,13 +32,13 @@ const mainFeatures = [
   {
     icon: Users,
     title: 'Memberships & subscriptions',
-    description: 'Build recurring revenue with memberships. Offer exclusive content, community access, and monthly perks — all managed through Gumroad.',
+    description: 'Build recurring revenue with memberships. Offer exclusive content, community access, and monthly perks — all managed through DigitalNook.',
     color: '#FFE580',
   },
   {
     icon: Mail,
     title: 'Email marketing built in',
-    description: 'Email your customers directly from Gumroad. Send updates, new product announcements, and newsletters without a separate tool.',
+    description: 'Email your customers directly from DigitalNook. Send updates, new product announcements, and newsletters without a separate tool.',
     color: '#A8D8FF',
   },
 ];
@@ -84,7 +84,7 @@ export default function Features() {
             className="text-gray-500 text-xl max-w-xl mx-auto"
             style={{ fontFamily: 'Space Grotesk, sans-serif' }}
           >
-            {locale === 'vi' ? 'Gumroad là nền tảng thương mại hoàn chỉnh cho nhà sáng tạo. Sản phẩm, thanh toán, email, phân tích — tất cả trong một nơi.' : 'Gumroad is a complete creator commerce platform. Products, payments, emails, analytics — all in one place.'}
+            {locale === 'vi' ? 'DigitalNook là nền tảng thương mại hoàn chỉnh cho nhà sáng tạo. Sản phẩm, thanh toán, email, phân tích — tất cả trong một nơi.' : 'DigitalNook is a complete creator commerce platform. Products, payments, emails, analytics — all in one place.'}
           </p>
         </div>
       </section>
@@ -97,7 +97,7 @@ export default function Features() {
               {
                 icon: CreditCard,
                 title: 'Bán mọi thứ',
-                description: 'Tệp kỹ thuật số, khóa học, thẻ thành viên, phần mềm, hàng hóa vật lý — Gumroad xử lý tất cả. Một nền tảng, vô vàn loại sản phẩm.',
+                description: 'Tệp kỹ thuật số, khóa học, thẻ thành viên, phần mềm, hàng hóa vật lý — DigitalNook xử lý tất cả. Một nền tảng, vô vàn loại sản phẩm.',
                 color: '#FF90E8',
               },
               {
@@ -115,7 +115,7 @@ export default function Features() {
               {
                 icon: Mail,
                 title: 'Tích hợp Email marketing',
-                description: 'Gửi email trực tiếp cho khách hàng từ Gumroad. Gửi thông báo, sản phẩm mới, và bản tin mà không cần dùng tool ngoài.',
+                description: 'Gửi email trực tiếp cho khách hàng từ DigitalNook. Gửi thông báo, sản phẩm mới, và bản tin mà không cần dùng tool ngoài.',
                 color: '#A8D8FF',
               },
             ] : mainFeatures).map((feature) => (
@@ -171,7 +171,7 @@ export default function Features() {
                 className="text-gray-600 text-lg leading-relaxed mb-8"
                 style={{ fontFamily: 'Space Grotesk, sans-serif' }}
               >
-                {locale === 'vi' ? 'Tạo sản phẩm, đặt giá và bắt đầu bán. Gumroad lo liệu thanh toán và giao hàng. Bạn chỉ tập trung vào sáng tạo.' : 'Create a product, set your price, and start selling. Gumroad handles the checkout, delivery, and payments. You focus on creating.'}
+                {locale === 'vi' ? 'Tạo sản phẩm, đặt giá và bắt đầu bán. DigitalNook lo liệu thanh toán và giao hàng. Bạn chỉ tập trung vào sáng tạo.' : 'Create a product, set your price, and start selling. DigitalNook handles the checkout, delivery, and payments. You focus on creating.'}
               </p>
               <ul className="space-y-4">
                 {(locale === 'vi' ? [

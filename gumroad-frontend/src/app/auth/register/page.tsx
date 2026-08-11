@@ -40,7 +40,7 @@ export default function RegisterPage() {
               className="font-bold text-3xl text-black"
               style={{ fontFamily: 'Space Grotesk, sans-serif', letterSpacing: '-0.03em' }}
             >
-              gumroad
+              DigitalNook
             </span>
           </Link>
           <p className="text-gray-500 mt-2" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>

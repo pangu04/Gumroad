@@ -38,8 +38,8 @@ export default function About() {
             style={{ fontFamily: 'Space Grotesk, sans-serif' }}
           >
             {locale === 'vi' 
-              ? 'Gumroad được thành lập vào năm 2011 với một ý tưởng đơn giản: cho phép các nhà sáng tạo kết nối trực tiếp với khán giả của họ, không qua trung gian, không cần cài đặt phức tạp, không phí hàng tháng.' 
-              : 'Gumroad was founded in 2011 with a simple idea: give creators a direct line to their audience, without intermediaries, without complicated setups, without monthly fees.'}
+              ? 'DigitalNook được thành lập vào năm 2011 với một ý tưởng đơn giản: cho phép các nhà sáng tạo kết nối trực tiếp với khán giả của họ, không qua trung gian, không cần cài đặt phức tạp, không phí hàng tháng.' 
+              : 'DigitalNook was founded in 2011 with a simple idea: give creators a direct line to their audience, without intermediaries, without complicated setups, without monthly fees.'}
           </p>
         </div>
       </section>
@@ -57,17 +57,17 @@ export default function About() {
             <div className="space-y-5 text-gray-600 leading-relaxed" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
               {locale === 'vi' ? (
                 <>
-                  <p>Sahil Lavingia xây dựng Gumroad năm 19 tuổi sau khi rời Pinterest. Anh ấy muốn có một cách đơn giản để bán cọ Photoshop do mình tạo ra. Mọi giải pháp lúc bấy giờ đều quá phức tạp, đắt đỏ hoặc đòi hỏi kỹ thuật.</p>
+                  <p>Sahil Lavingia xây dựng DigitalNook năm 19 tuổi sau khi rời Pinterest. Anh ấy muốn có một cách đơn giản để bán cọ Photoshop do mình tạo ra. Mọi giải pháp lúc bấy giờ đều quá phức tạp, đắt đỏ hoặc đòi hỏi kỹ thuật.</p>
                   <p>Vì vậy, anh ấy tự xây dựng một cái. Trong một ngày cuối tuần. Đưa nó lên Hacker News. Và nó đã trở nên lan truyền (viral).</p>
-                  <p>Trong thập kỷ tiếp theo, Gumroad phát triển thành một nền tảng được sử dụng bởi hàng trăm nghìn nhà sáng tạo trên toàn thế giới — nhà thiết kế, nhà văn, nhạc sĩ, nhà giáo dục, lập trình viên — kiếm được hàng tỷ đô la trực tiếp từ khán giả của họ.</p>
+                  <p>Trong thập kỷ tiếp theo, DigitalNook phát triển thành một nền tảng được sử dụng bởi hàng trăm nghìn nhà sáng tạo trên toàn thế giới — nhà thiết kế, nhà văn, nhạc sĩ, nhà giáo dục, lập trình viên — kiếm được hàng tỷ đô la trực tiếp từ khán giả của họ.</p>
                   <p>Chúng tôi đã có những thất bại. Năm 2015, chúng tôi phải sa thải hầu hết đội ngũ. Chúng tôi gần như đóng cửa. Thay vì vậy, Sahil đã viết công khai về trải nghiệm này, và nó trở thành một trong những câu chuyện khởi nghiệp được chia sẻ nhiều nhất từ trước đến nay.</p>
                   <p>Sự trung thực đó định hình cách chúng tôi hoạt động. Chúng tôi minh bạch về những con số, quyết định và sai lầm của mình. Chúng tôi tin rằng nền kinh tế sáng tạo sẽ tốt hơn khi mọi người đều chơi bài ngửa.</p>
                 </>
               ) : (
                 <>
-                  <p>Sahil Lavingia built Gumroad at 19 years old after leaving Pinterest. He wanted a simple way to sell a Photoshop brush he'd made. Every solution he found was too complicated, too expensive, or required technical setup.</p>
+                  <p>Sahil Lavingia built DigitalNook at 19 years old after leaving Pinterest. He wanted a simple way to sell a Photoshop brush he'd made. Every solution he found was too complicated, too expensive, or required technical setup.</p>
                   <p>So he built his own. In a weekend. Put it on Hacker News. It went viral.</p>
-                  <p>Over the next decade, Gumroad grew into a platform used by hundreds of thousands of creators worldwide — designers, writers, musicians, educators, developers, and more — earning billions of dollars directly from their audiences.</p>
+                  <p>Over the next decade, DigitalNook grew into a platform used by hundreds of thousands of creators worldwide — designers, writers, musicians, educators, developers, and more — earning billions of dollars directly from their audiences.</p>
                   <p>We've had our setbacks. In 2015 we had to lay off most of our team. We almost shut down. Instead, Sahil wrote about the experience publicly, and it became one of the most-shared startup stories ever written.</p>
                   <p>That honesty defines how we operate. We're transparent about our numbers, our decisions, and our mistakes. We believe the creator economy is better when everyone is playing with open cards.</p>
                 </>
@@ -76,7 +76,7 @@ export default function About() {
           </div>
           <div className="space-y-4">
             {(locale === 'vi' ? [
-              { year: '2011', event: 'Gumroad được thành lập. Sản phẩm đầu tiên được bán: cọ vẽ Photoshop.' },
+              { year: '2011', event: 'DigitalNook được thành lập. Sản phẩm đầu tiên được bán: cọ vẽ Photoshop.' },
               { year: '2012', event: 'Gọi vốn thành công 8 triệu đô la từ Kleiner Perkins.' },
               { year: '2015', event: 'Sa thải hầu hết đội ngũ. Quyết định tiếp tục như một công ty nhỏ, có lợi nhuận.' },
               { year: '2019', event: 'Vượt qua 100 triệu đô la tổng chi trả cho nhà sáng tạo.' },
@@ -84,7 +84,7 @@ export default function About() {
               { year: '2023', event: 'Vượt qua 500 triệu đô la tổng chi trả.' },
               { year: '2026', event: 'Hơn 100.000 nhà sáng tạo đang hoạt động và vẫn đang tăng mỗi ngày.' },
             ] : [
-              { year: '2011', event: 'Gumroad founded. First product sold: a Photoshop brush.' },
+              { year: '2011', event: 'DigitalNook founded. First product sold: a Photoshop brush.' },
               { year: '2012', event: 'Raised $8M from Kleiner Perkins and other investors.' },
               { year: '2015', event: 'Laid off most of the team. Decided to keep going as a small, profitable company.' },
               { year: '2019', event: 'Surpassed $100M in total creator payouts.' },
@@ -168,7 +168,7 @@ export default function About() {
               },
               {
                 title: 'Không rào cản',
-                description: 'Bất kỳ ai cũng có thể dùng Gumroad. Không cần kiểm duyệt, không yêu cầu số người theo dõi.',
+                description: 'Bất kỳ ai cũng có thể dùng DigitalNook. Không cần kiểm duyệt, không yêu cầu số người theo dõi.',
               },
               {
                 title: 'Nhỏ nhưng có võ',
@@ -193,7 +193,7 @@ export default function About() {
               },
               {
                 title: 'No gatekeeping',
-                description: 'Anyone can use Gumroad. No application, no approval, no minimum follower count. Start selling today.',
+                description: 'Anyone can use DigitalNook. No application, no approval, no minimum follower count. Start selling today.',
               },
               {
                 title: 'Small and mighty',

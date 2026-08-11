@@ -10,7 +10,7 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: 'Gumroad Clone',
+  title: 'DigitalNook Clone',
   description: 'The marketplace for digital creators',
 };
 

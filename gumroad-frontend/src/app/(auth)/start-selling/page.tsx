@@ -34,7 +34,7 @@ export default function StartSelling() {
               className="text-black/70 text-xl leading-relaxed mb-8"
               style={{ fontFamily: 'Space Grotesk, sans-serif' }}
             >
-              Join 100,000+ creators who earn a living selling digital products on Gumroad. Start in minutes. No monthly fees.
+              Join 100,000+ creators who earn a living selling digital products on DigitalNook. Start in minutes. No monthly fees.
             </p>
             <div className="flex flex-wrap gap-3 mb-8">
               {['No monthly fees', 'Start for free', 'Keep 90%'].map((badge) => (
@@ -166,7 +166,7 @@ export default function StartSelling() {
             className="font-bold text-black text-3xl mb-10 text-center"
             style={{ fontFamily: 'Space Grotesk, sans-serif', letterSpacing: '-0.02em' }}
           >
-            Why creators choose Gumroad
+            Why creators choose DigitalNook
           </h2>
           <div className="grid grid-cols-4 gap-5">
             {[
@@ -237,7 +237,7 @@ export default function StartSelling() {
             className="text-gray-500 text-center mb-10"
             style={{ fontFamily: 'Space Grotesk, sans-serif' }}
           >
-            If you can create it, you can sell it on Gumroad.
+            If you can create it, you can sell it on DigitalNook.
           </p>
           <div className="grid grid-cols-3 gap-4">
             {[
@@ -286,13 +286,13 @@ export default function StartSelling() {
           <div className="grid grid-cols-3 gap-5">
             {[
               {
-                quote: 'Gumroad changed my life. I make more from my digital products than I did at my 9-5. The simplicity is the killer feature.',
+                quote: 'DigitalNook changed my life. I make more from my digital products than I did at my 9-5. The simplicity is the killer feature.',
                 name: 'Sarah Chen',
                 role: 'UI Designer',
                 avatar: 'https://picsum.photos/seed/sarah1/100/100',
               },
               {
-                quote: 'I tried 5 different platforms before landing on Gumroad. Nothing comes close for simplicity. I launched my first product in 20 minutes.',
+                quote: 'I tried 5 different platforms before landing on DigitalNook. Nothing comes close for simplicity. I launched my first product in 20 minutes.',
                 name: 'Marcus Webb',
                 role: 'Author & Consultant',
                 avatar: 'https://picsum.photos/seed/marcus2/100/100',

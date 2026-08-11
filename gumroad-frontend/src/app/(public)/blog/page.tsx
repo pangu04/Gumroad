@@ -25,7 +25,7 @@ export default function Blog() {
             className="text-[#FF90E8] font-bold text-sm uppercase tracking-widest mb-3"
             style={{ fontFamily: 'Space Grotesk, sans-serif' }}
           >
-            The Gumroad Blog
+            The DigitalNook Blog
           </p>
           <h1
             className="font-bold text-black mb-4"

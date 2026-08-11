@@ -14,7 +14,7 @@ export default function Pricing() {
   const faqs = [
     {
       q: locale === 'vi' ? 'Có phí hàng tháng không?' : 'Are there any monthly fees?',
-      a: locale === 'vi' ? 'Không. Gumroad không thu phí hàng tháng, không phí cài đặt, không phụ phí ẩn. Chúng tôi chỉ lấy 10% khi bạn có doanh thu.' : 'No. Gumroad has no monthly fees, no setup fees, and no hidden costs. We only take 10% when you make a sale.',
+      a: locale === 'vi' ? 'Không. DigitalNook không thu phí hàng tháng, không phí cài đặt, không phụ phí ẩn. Chúng tôi chỉ lấy 10% khi bạn có doanh thu.' : 'No. DigitalNook has no monthly fees, no setup fees, and no hidden costs. We only take 10% when you make a sale.',
     },
     {
       q: locale === 'vi' ? 'Hỗ trợ các phương thức thanh toán nào?' : 'What payment methods do you support?',
@@ -34,7 +34,7 @@ export default function Pricing() {
     },
     {
       q: locale === 'vi' ? 'Tôi có thể dùng tên miền riêng không?' : 'Can I use a custom domain?',
-      a: locale === 'vi' ? 'Có, bạn hoàn toàn có thể gắn tên miền riêng vào gian hàng Gumroad của mình miễn phí.' : 'Yes, you can use your own custom domain on your Gumroad store page for free.',
+      a: locale === 'vi' ? 'Có, bạn hoàn toàn có thể gắn tên miền riêng vào gian hàng DigitalNook của mình miễn phí.' : 'Yes, you can use your own custom domain on your DigitalNook store page for free.',
     },
   ];
 
@@ -80,7 +80,7 @@ export default function Pricing() {
                   className="font-bold text-black text-2xl mb-2"
                   style={{ fontFamily: 'Space Grotesk, sans-serif' }}
                 >
-                  Gumroad
+                  DigitalNook
                 </h2>
                 <p
                   className="text-gray-500"
@@ -174,12 +174,12 @@ export default function Pricing() {
 
               {(locale === 'vi' ? [
                 { label: 'Giá sản phẩm của bạn', value: '$100.00', positive: true },
-                { label: 'Phí Gumroad (10%)', value: '−$10.00', positive: false },
+                { label: 'Phí DigitalNook (10%)', value: '−$10.00', positive: false },
                 { label: 'Phí xử lý giao dịch (~3%)', value: '−$3.00', positive: false },
                 { label: 'Bạn nhận được', value: '$87.00', positive: true, total: true },
               ] : [
                 { label: 'Your product price', value: '$100.00', positive: true },
-                { label: 'Gumroad fee (10%)', value: '−$10.00', positive: false },
+                { label: 'DigitalNook fee (10%)', value: '−$10.00', positive: false },
                 { label: 'Payment processing (~3%)', value: '−$3.00', positive: false },
                 { label: 'You receive', value: '$87.00', positive: true, total: true },
               ]).map((row, i) => (
@@ -273,7 +273,7 @@ export default function Pricing() {
               </thead>
               <tbody>
                 {[
-                  { platform: 'Gumroad', monthly: '$0', transaction: '10%', setup: '$0', highlight: true },
+                  { platform: 'DigitalNook', monthly: '$0', transaction: '10%', setup: '$0', highlight: true },
                   { platform: 'Teachable', monthly: '$39–$299', transaction: '0–5%', setup: '$0' },
                   { platform: 'Podia', monthly: '$33–$89', transaction: '0%', setup: '$0' },
                   { platform: 'Shopify', monthly: '$39–$399', transaction: '0.5–2%', setup: '$0' },

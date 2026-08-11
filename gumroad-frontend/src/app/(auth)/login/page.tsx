@@ -30,7 +30,7 @@ export default function Login() {
               className="font-bold text-black text-3xl"
               style={{ fontFamily: 'Space Grotesk, sans-serif', letterSpacing: '-0.03em' }}
             >
-              gumroad
+              DigitalNook
             </span>
           </Link>
         </div>
@@ -67,7 +67,7 @@ export default function Login() {
                 className="font-bold text-black text-2xl mb-1"
                 style={{ fontFamily: 'Space Grotesk, sans-serif', letterSpacing: '-0.02em' }}
               >
-                Log in to Gumroad
+                Log in to DigitalNook
               </h1>
               <p
                 className="text-gray-500 text-sm mb-8"

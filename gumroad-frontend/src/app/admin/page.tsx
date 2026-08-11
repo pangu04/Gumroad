@@ -318,7 +318,7 @@ export default function AdminDashboard() {
           <div className="p-6 border-b-2 border-black">
             <Link href="/">
               <span className="font-bold text-2xl text-black" style={{ fontFamily: 'Space Grotesk, sans-serif', letterSpacing: '-0.03em' }}>
-                gumroad
+                DigitalNook
               </span>
             </Link>
             <p className="text-xs text-gray-400 mt-1" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>{t.admin.dashboard}</p>

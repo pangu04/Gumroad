@@ -30,8 +30,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const savedToken = localStorage.getItem('gumroad_token');
-    const savedUser = localStorage.getItem('gumroad_user');
+    const savedToken = localStorage.getItem('DigitalNook_token');
+    const savedUser = localStorage.getItem('DigitalNook_user');
     if (savedToken && savedUser) {
       setToken(savedToken);
       setUser(JSON.parse(savedUser));
@@ -54,8 +54,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const data = await res.json();
     setToken(data.access_token);
     setUser(data.user);
-    localStorage.setItem('gumroad_token', data.access_token);
-    localStorage.setItem('gumroad_user', JSON.stringify(data.user));
+    localStorage.setItem('DigitalNook_token', data.access_token);
+    localStorage.setItem('DigitalNook_user', JSON.stringify(data.user));
   };
 
   const register = async (name: string, email: string, password: string) => {
@@ -73,15 +73,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const data = await res.json();
     setToken(data.access_token);
     setUser(data.user);
-    localStorage.setItem('gumroad_token', data.access_token);
-    localStorage.setItem('gumroad_user', JSON.stringify(data.user));
+    localStorage.setItem('DigitalNook_token', data.access_token);
+    localStorage.setItem('DigitalNook_user', JSON.stringify(data.user));
   };
 
   const logout = () => {
     setToken(null);
     setUser(null);
-    localStorage.removeItem('gumroad_token');
-    localStorage.removeItem('gumroad_user');
+    localStorage.removeItem('DigitalNook_token');
+    localStorage.removeItem('DigitalNook_user');
   };
 
   return (

@@ -213,20 +213,20 @@ export const blogPosts = [
 
 The first thing most creators get wrong is they spend months making the product before validating demand. I made this mistake with my second product — three months of work, $600 in revenue. Painful.
 
-What actually works: sell before you build. Write the sales page, set up the Gumroad listing, and share it with your audience. If people pay, build it. If not, you've saved yourself weeks of work.
+What actually works: sell before you build. Write the sales page, set up the DigitalNook listing, and share it with your audience. If people pay, build it. If not, you've saved yourself weeks of work.
 
 My three biggest lessons:
 1. Your audience is your distribution. No audience = no sales, regardless of product quality.
 2. Price higher than you're comfortable with. Most creators underprice by 3-5x.
 3. Email list beats social media every time. I have 12,000 subscribers and they drive 80% of my revenue.
 
-The $100K milestone felt good but it wasn't the goal. The goal was freedom — to work on things I care about, with people I respect, on my own schedule. Digital products on Gumroad gave me that.`,
+The $100K milestone felt good but it wasn't the goal. The goal was freedom — to work on things I care about, with people I respect, on my own schedule. Digital products on DigitalNook gave me that.`,
     tags: ['Creator Stories', 'Revenue', 'Digital Products'],
   },
   {
     id: '2',
-    title: 'Gumroad Product Update: New Analytics Dashboard',
-    author: 'Gumroad Team',
+    title: 'DigitalNook Product Update: New Analytics Dashboard',
+    author: 'DigitalNook Team',
     authorId: '0',
     date: 'May 20, 2026',
     category: 'Product Updates',
@@ -268,7 +268,7 @@ Now: the bar is higher. Audiences are more selective. Generic content doesn't cu
 
 The creators I know who are struggling have one thing in common: they're chasing trends. The ones thriving are building something specific for someone specific.
 
-That specificity is what platforms like Gumroad enable. You don't need millions of followers. You need a few thousand people who care deeply about what you make.
+That specificity is what platforms like DigitalNook enable. You don't need millions of followers. You need a few thousand people who care deeply about what you make.
 
 The creator economy isn't dying. It's just finally requiring creators to actually create.`,
     tags: ['Industry', 'Creator Economy', 'Trends'],
@@ -320,13 +320,13 @@ What changed between month one and month six: I stopped making templates I thoug
 
 The other thing that changed: I started treating it like a business. Proper product pages, email follow-ups, customer interviews. When I understood what my customers actually used the templates for, I got much better at making them.
 
-Gumroad made the business side invisible so I could focus on making things. That matters more than most people realize.`,
+DigitalNook made the business side invisible so I could focus on making things. That matters more than most people realize.`,
     tags: ['Creator Stories', 'Notion', 'Income'],
   },
   {
     id: '6',
     title: 'Why We Keep Our Fee Simple',
-    author: 'Gumroad Team',
+    author: 'DigitalNook Team',
     authorId: '0',
     date: 'April 22, 2026',
     category: 'Company',
@@ -335,7 +335,7 @@ Gumroad made the business side invisible so I could focus on making things. That
     excerpt: 'Other platforms have complex tier structures and hidden fees. We charge 10% and nothing else. Here\'s why.',
     content: `Other platforms have complex tier structures and hidden fees. We charge 10% and nothing else. Here's why.
 
-When Gumroad started, we experimented with different pricing models. Monthly fees, tiered plans, feature unlocks. Every model we tried had the same problem: it punished small creators.
+When DigitalNook started, we experimented with different pricing models. Monthly fees, tiered plans, feature unlocks. Every model we tried had the same problem: it punished small creators.
 
 If you're making $500/month selling digital products, a $30/month platform fee is 6% of your revenue before you've sold a single thing. That's not a partnership — it's a subscription.
 
@@ -364,7 +364,7 @@ export const jobs = [
     department: 'Design',
     type: 'Full-time',
     location: 'Remote',
-    description: 'We\'re looking for a senior product designer to help shape the future of Gumroad\'s creator experience.',
+    description: 'We\'re looking for a senior product designer to help shape the future of DigitalNook\'s creator experience.',
   },
   {
     id: '2',
@@ -380,7 +380,7 @@ export const jobs = [
     department: 'Support',
     type: 'Full-time',
     location: 'Remote',
-    description: 'Help our creators grow their businesses and get the most out of Gumroad.',
+    description: 'Help our creators grow their businesses and get the most out of DigitalNook.',
   },
   {
     id: '4',
@@ -388,7 +388,7 @@ export const jobs = [
     department: 'Marketing',
     type: 'Full-time',
     location: 'Remote',
-    description: 'Drive creator acquisition and help Gumroad reach the next million creators.',
+    description: 'Drive creator acquisition and help DigitalNook reach the next million creators.',
   },
   {
     id: '5',
@@ -404,7 +404,7 @@ export const jobs = [
     department: 'Marketing',
     type: 'Contract',
     location: 'Remote',
-    description: 'Create compelling content that helps creators succeed and attracts new ones to Gumroad.',
+    description: 'Create compelling content that helps creators succeed and attracts new ones to DigitalNook.',
   },
 ];
 
@@ -413,7 +413,7 @@ export const teamMembers = [
     id: '1',
     name: 'Sahil Lavingia',
     role: 'Founder & CEO',
-    bio: 'Started Gumroad at 19. Believes in a world where anyone can make a living from their creativity.',
+    bio: 'Started DigitalNook at 19. Believes in a world where anyone can make a living from their creativity.',
     avatar: 'https://picsum.photos/seed/sahil/200/200',
   },
   {
@@ -448,7 +448,7 @@ export const teamMembers = [
     id: '6',
     name: 'Sofia Ahmed',
     role: 'Head of Marketing',
-    bio: 'Grew Notion\'s creator community to 1M+. Now doing the same for Gumroad.',
+    bio: 'Grew Notion\'s creator community to 1M+. Now doing the same for DigitalNook.',
     avatar: 'https://picsum.photos/seed/sofia/200/200',
   },
 ];

@@ -39,7 +39,7 @@ export default function LoginPage() {
               className="font-bold text-3xl text-black"
               style={{ fontFamily: 'Space Grotesk, sans-serif', letterSpacing: '-0.03em' }}
             >
-              gumroad
+              DigitalNook
             </span>
           </Link>
           <p

@@ -30,7 +30,7 @@ export function Header() {
           className="text-white font-bold text-xl tracking-tight select-none"
           style={{ fontFamily: 'Space Grotesk, sans-serif', letterSpacing: '-0.02em' }}
         >
-          gumroad
+          DigitalNook
         </span>
       </Link>
 

@@ -70,7 +70,7 @@ export const en = {
 
   // Footer
   footer: {
-    description: 'Gumroad helps creators sell directly to their audience. No monthly fees. Just 10%.',
+    description: 'DigitalNook helps creators sell directly to their audience. No monthly fees. Just 10%.',
     productTitle: 'Product',
     companyTitle: 'Company',
     supportTitle: 'Support',
@@ -79,7 +79,7 @@ export const en = {
     apiDocs: 'API Docs',
     status: 'Status',
     press: 'Press',
-    copyright: '© 2026 Gumroad, Inc. All rights reserved.',
+    copyright: '© 2026 DigitalNook, Inc. All rights reserved.',
     privacy: 'Privacy',
     terms: 'Terms',
     cookies: 'Cookies',
@@ -98,7 +98,7 @@ export const en = {
 
   // Login
   login: {
-    title: 'Log in to Gumroad',
+    title: 'Log in to DigitalNook',
     subtitle: 'Good to have you back.',
     email: 'Email address',
     emailPlaceholder: 'you@example.com',
@@ -118,7 +118,7 @@ export const en = {
   // Start Selling
   startSelling: {
     heroTitle: 'Turn your knowledge into income.',
-    heroDesc: 'Join 100,000+ creators who earn a living selling digital products on Gumroad. Start in minutes. No monthly fees.',
+    heroDesc: 'Join 100,000+ creators who earn a living selling digital products on DigitalNook. Start in minutes. No monthly fees.',
     noMonthlyFees: 'No monthly fees',
     startForFree: 'Start for free',
     keep90: 'Keep 90%',
@@ -132,13 +132,13 @@ export const en = {
     confirmSent: 'We sent a confirmation to',
     checkInbox: '. Check your inbox to complete setup.',
     differentEmail: 'Use a different email',
-    whyChoose: 'Why creators choose Gumroad',
+    whyChoose: 'Why creators choose DigitalNook',
     paidToCreators: 'Paid to creators',
     ourOnlyFee: 'Our only fee',
     activeCreators: 'Active creators',
     productsYouCanSell: 'Products you can sell',
     sellWhatever: 'Sell whatever you create',
-    sellWhateverDesc: 'If you can create it, you can sell it on Gumroad.',
+    sellWhateverDesc: 'If you can create it, you can sell it on DigitalNook.',
     fromRealCreators: 'From real creators',
   },
 
@@ -180,7 +180,7 @@ export const en = {
   // Static Pages
   staticPages: {
     about: {
-      tag: 'About Gumroad',
+      tag: 'About DigitalNook',
       hero1: 'We believe anyone should be',
       hero2: 'able to make a living from',
       hero3: 'their creativity.',

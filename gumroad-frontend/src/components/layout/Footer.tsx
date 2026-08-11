@@ -16,7 +16,7 @@ export function Footer() {
                 className="text-white font-bold text-2xl"
                 style={{ fontFamily: 'Space Grotesk, sans-serif', letterSpacing: '-0.02em' }}
               >
-                gumroad
+                DigitalNook
               </span>
             </Link>
             <p className="mt-4 text-white/60 text-sm leading-relaxed max-w-xs" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>

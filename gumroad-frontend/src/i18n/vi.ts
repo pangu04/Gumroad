@@ -72,7 +72,7 @@ export const vi: Translations = {
 
   // Footer
   footer: {
-    description: 'Gumroad giúp nhà sáng tạo bán trực tiếp cho khán giả. Không phí hàng tháng. Chỉ 10%.',
+    description: 'DigitalNook giúp nhà sáng tạo bán trực tiếp cho khán giả. Không phí hàng tháng. Chỉ 10%.',
     productTitle: 'Sản phẩm',
     companyTitle: 'Công ty',
     supportTitle: 'Hỗ trợ',
@@ -81,7 +81,7 @@ export const vi: Translations = {
     apiDocs: 'Tài liệu API',
     status: 'Trạng thái',
     press: 'Báo chí',
-    copyright: '© 2026 Gumroad, Inc. Đã đăng ký bản quyền.',
+    copyright: '© 2026 DigitalNook, Inc. Đã đăng ký bản quyền.',
     privacy: 'Quyền riêng tư',
     terms: 'Điều khoản',
     cookies: 'Cookie',
@@ -100,7 +100,7 @@ export const vi: Translations = {
 
   // Login
   login: {
-    title: 'Đăng nhập vào Gumroad',
+    title: 'Đăng nhập vào DigitalNook',
     subtitle: 'Rất vui khi gặp lại bạn.',
     email: 'Địa chỉ email',
     emailPlaceholder: 'ban@example.com',
@@ -120,7 +120,7 @@ export const vi: Translations = {
   // Start Selling
   startSelling: {
     heroTitle: 'Biến kiến thức thành thu nhập.',
-    heroDesc: 'Cùng hơn 100.000 nhà sáng tạo kiếm sống bằng cách bán sản phẩm số trên Gumroad. Bắt đầu trong vài phút. Không phí hàng tháng.',
+    heroDesc: 'Cùng hơn 100.000 nhà sáng tạo kiếm sống bằng cách bán sản phẩm số trên DigitalNook. Bắt đầu trong vài phút. Không phí hàng tháng.',
     noMonthlyFees: 'Không phí hàng tháng',
     startForFree: 'Bắt đầu miễn phí',
     keep90: 'Giữ lại 90%',
@@ -134,13 +134,13 @@ export const vi: Translations = {
     confirmSent: 'Chúng tôi đã gửi xác nhận đến',
     checkInbox: '. Kiểm tra hộp thư để hoàn tất.',
     differentEmail: 'Dùng email khác',
-    whyChoose: 'Tại sao nhà sáng tạo chọn Gumroad',
+    whyChoose: 'Tại sao nhà sáng tạo chọn DigitalNook',
     paidToCreators: 'Đã trả cho nhà sáng tạo',
     ourOnlyFee: 'Phí duy nhất',
     activeCreators: 'Nhà sáng tạo hoạt động',
     productsYouCanSell: 'Sản phẩm bạn có thể bán',
     sellWhatever: 'Bán bất cứ thứ gì bạn tạo ra',
-    sellWhateverDesc: 'Nếu bạn tạo được, bạn có thể bán nó trên Gumroad.',
+    sellWhateverDesc: 'Nếu bạn tạo được, bạn có thể bán nó trên DigitalNook.',
     fromRealCreators: 'Từ nhà sáng tạo thực sự',
   },
 
@@ -182,7 +182,7 @@ export const vi: Translations = {
   // Static Pages
   staticPages: {
     about: {
-      tag: 'Về Gumroad',
+      tag: 'Về DigitalNook',
       hero1: 'Chúng tôi tin rằng ai cũng nên',
       hero2: 'có thể sống dựa trên',
       hero3: 'sự sáng tạo của chính mình.',

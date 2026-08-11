@@ -27,7 +27,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
 
   // Load saved locale from localStorage on mount
   useEffect(() => {
-    const saved = localStorage.getItem('gumroad-locale') as Locale | null;
+    const saved = localStorage.getItem('DigitalNook-locale') as Locale | null;
     if (saved && (saved === 'en' || saved === 'vi')) {
       setLocaleState(saved);
     }
@@ -35,7 +35,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
 
   const setLocale = useCallback((newLocale: Locale) => {
     setLocaleState(newLocale);
-    localStorage.setItem('gumroad-locale', newLocale);
+    localStorage.setItem('DigitalNook-locale', newLocale);
   }, []);
 
   const toggleLocale = useCallback(() => {
