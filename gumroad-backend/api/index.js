@@ -1,3 +1,4 @@
+require('@prisma/client');
 const { NestFactory } = require('@nestjs/core');
 const { AppModule } = require('../dist/src/app.module');
 const { ValidationPipe } = require('@nestjs/common');
