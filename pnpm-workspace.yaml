@@ -13,6 +13,5 @@ allowBuilds:
   prisma: true
 onlyBuiltDependenciesFile: ./allowed-deps.json
 
-overrides:
-  vite: "6.3.5"
+
 
